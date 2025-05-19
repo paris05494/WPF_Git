@@ -58,10 +58,14 @@
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Services\GitService.cs" />
     <Compile Include="ViewModels\GitLogViewModel.cs" />
+    <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\GitLogView.xaml.cs">
       <DependentUpon>GitLogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InfoView.xaml.cs">
+      <DependentUpon>InfoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
@@ -79,6 +83,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\GitLogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InfoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

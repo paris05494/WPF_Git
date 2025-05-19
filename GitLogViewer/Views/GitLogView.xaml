@@ -11,13 +11,13 @@
         <DataGrid ItemsSource="{Binding GitLogs}" AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
                 <!--Commit-->
-                <DataGridTextColumn Header="Hash" Binding="{Binding Hash}" Width="150"/>
+                <DataGridTextColumn Header="Hash" Binding="{Binding Hash}" Width="Auto"/>
 
                 <!--Author-->
-                <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="120"/>
+                <DataGridTextColumn Header="Author" Binding="{Binding Author}" Width="Auto"/>
 
                 <!--Date-->
-                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="170"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="Auto"/>
 
                 <!--Message-->
                 <DataGridTextColumn Header="Message" Binding="{Binding Message}" Width="*"/>

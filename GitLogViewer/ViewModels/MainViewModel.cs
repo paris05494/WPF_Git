@@ -15,14 +15,12 @@ namespace GitLogViewer.ViewModels
     {
         private readonly GitService _gitService;
 
-        //pathที่เลือกได้จาก dropdown
         public ObservableCollection<string> RepoPaths { get; } = new ObservableCollection<string>
-        {
-            @"",
-            @""
-        };
+    {
+        @"",
+        @""
+    };
 
-        //path ที่เลือกปัจจุบันจาก dropdown
         private string _selectedPath;
         public string SelectedPath
         {
@@ -37,37 +35,19 @@ namespace GitLogViewer.ViewModels
             }
         }
 
-
-        public ObservableCollection<string> GitFiles { get; } = new ObservableCollection<string>();
-
-        //คำสั่งที่ผูกกับปุ่มโหลดไฟล์
-        public ICommand LoadFilesCommand { get; }
-
-        //คำสั่งที่เปิด Git log viewer
         public ICommand OpenGitLogCommand { get; }
+
+        public InfoViewModel InfoVM { get; }
 
         public MainViewModel()
         {
             _gitService = new GitService();
             SelectedPath = RepoPaths.FirstOrDefault();
 
-            LoadFilesCommand = new RelayCommand(LoadFiles);
             OpenGitLogCommand = new RelayCommand(OpenGitLog);
-
+            InfoVM = new InfoViewModel(_gitService, this);
         }
 
-        //โหลดรายชื่อไฟล์ใน repo ปัจจุบัน
-        private void LoadFiles()
-        {
-            if (string.IsNullOrEmpty(SelectedPath)) return;
-
-            GitFiles.Clear();
-            var files = _gitService.GetFiles(SelectedPath);
-            foreach (var file in files)
-                GitFiles.Add(file);
-        }
-
-        //เปิดหน้าต่าง Git log viewer พร้อมส่ง path ปัจจุบันไปให้ ViewModel
         private void OpenGitLog()
         {
             if (string.IsNullOrEmpty(SelectedPath)) return;
@@ -79,4 +59,5 @@ namespace GitLogViewer.ViewModels
             gitLogView.Show();
         }
     }
+
 }
