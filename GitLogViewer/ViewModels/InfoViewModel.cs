@@ -2,42 +2,61 @@
 using GitLogViewer.Commands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using GitLogViewer.Views;
 
 namespace GitLogViewer.ViewModels
 {
     public class InfoViewModel : ViewModelBase
     {
         private readonly GitService _gitService;
-        private readonly MainViewModel _mainVM;
 
         public ObservableCollection<string> GitFiles { get; } = new ObservableCollection<string>();
 
         public ICommand LoadFilesCommand { get; }
-        public ICommand OpenGitLogCommand { get; }
+        public ICommand DoubleClickCommand { get; }
 
-        public InfoViewModel(GitService gitService, MainViewModel mainVM)
+        private string _selectedPath;
+        public string SelectedPath
         {
-            _gitService = gitService;
-            _mainVM = mainVM;
+            get => _selectedPath;
+            set
+            {
+                if (_selectedPath != value)
+                {
+                    _selectedPath = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
 
+        public GitService GitService { get; set; }
+        public InfoViewModel(GitService gitService)
+        {
+            _gitService = new GitService();
             LoadFilesCommand = new RelayCommand(LoadFiles);
-            OpenGitLogCommand = new RelayCommand(OpenGitLog);
+            DoubleClickCommand = new RelayCommand(DoubleClick);
         }
 
         private void LoadFiles()
         {
             GitFiles.Clear();
 
-            if (string.IsNullOrEmpty(_mainVM.SelectedPath)) return;
+            if (string.IsNullOrEmpty(SelectedPath)) return;
 
-            var files = _gitService.GetFiles(_mainVM.SelectedPath);
+            var files = _gitService.GetFiles(SelectedPath);
             foreach (var file in files)
                 GitFiles.Add(file);
         }
 
-        private void OpenGitLog()
+        private void DoubleClick()
         {
-            _mainVM.OpenGitLogCommand.Execute(null);
+            if (string.IsNullOrEmpty(SelectedPath)) return;
+
+            var gitLogView = new GitLogView
+            {
+                DataContext = new GitLogViewModel(_gitService) { SelectedPath = this.SelectedPath }
+            };
+            gitLogView.Show();
         }
     }
 }

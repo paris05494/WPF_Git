@@ -8,12 +8,11 @@
         <TextBlock Text="Files in repository:" FontWeight="Bold" />
         <ListBox ItemsSource="{Binding GitFiles}" Height="150" Margin="0,0,0,10"/>
 
-        <!-- ใช้ ICommand + Interaction.Triggers (Blend SDK) -->
         <TextBlock Text="Double-click here to open Git Log Viewer"
                    FontStyle="Italic" Foreground="Blue" Cursor="Hand">
             <TextBlock.InputBindings>
                 <MouseBinding MouseAction="LeftDoubleClick"
-                              Command="{Binding OpenGitLogCommand}" />
+                              Command="{Binding DoubleClickCommand}" />
             </TextBlock.InputBindings>
         </TextBlock>
     </StackPanel>

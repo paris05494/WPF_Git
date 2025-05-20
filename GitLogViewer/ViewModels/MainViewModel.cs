@@ -1,13 +1,7 @@
-﻿using GitLogViewer.Models;
-using GitLogViewer.Services;
+﻿using GitLogViewer.Services;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using System.Collections.Generic;
 using System.Linq;
-using GitLogViewer.Commands;
-using GitLogViewer.Views;
+using GitLogViewer.ViewModels;
 
 namespace GitLogViewer.ViewModels
 {
@@ -16,10 +10,10 @@ namespace GitLogViewer.ViewModels
         private readonly GitService _gitService;
 
         public ObservableCollection<string> RepoPaths { get; } = new ObservableCollection<string>
-    {
-        @"",
-        @""
-    };
+        {
+            @"C:\Users\paris\TortoiseGit\tortoisegit_tutorials",
+            @"C:\Users\paris\TortoiseGit\tortoisegit_tests"
+        };
 
         private string _selectedPath;
         public string SelectedPath
@@ -31,33 +25,22 @@ namespace GitLogViewer.ViewModels
                 {
                     _selectedPath = value;
                     OnPropertyChanged();
+
+                    if (InfoVM != null)
+                        InfoVM.SelectedPath = value; // sync ไปที่ InfoVM
                 }
             }
         }
 
-        public ICommand OpenGitLogCommand { get; }
-
         public InfoViewModel InfoVM { get; }
+        public GitLogViewModel gitLogVM { get; }
 
         public MainViewModel()
         {
+            gitLogVM = new GitLogViewModel(_gitService);
+            InfoVM = new InfoViewModel(_gitService);
             _gitService = new GitService();
             SelectedPath = RepoPaths.FirstOrDefault();
-
-            OpenGitLogCommand = new RelayCommand(OpenGitLog);
-            InfoVM = new InfoViewModel(_gitService, this);
-        }
-
-        private void OpenGitLog()
-        {
-            if (string.IsNullOrEmpty(SelectedPath)) return;
-
-            var gitLogView = new GitLogView
-            {
-                DataContext = new GitLogViewModel(_gitService, SelectedPath)
-            };
-            gitLogView.Show();
         }
     }
-
 }
