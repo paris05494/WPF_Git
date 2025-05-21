@@ -21,6 +21,7 @@ namespace GitLogViewer.ViewModels
             _selectedPath = selectedPath;
             LoadFilesCommand = new RelayCommand(LoadFiles);
             DoubleClickCommand = new RelayCommand(OpenGitLogWindow);
+            LoadFiles();
         }
 
         public void UpdatePath(string newPath)
