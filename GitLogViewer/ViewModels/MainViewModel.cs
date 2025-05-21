@@ -1,14 +1,11 @@
 ﻿using GitLogViewer.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
-using GitLogViewer.ViewModels;
 
 namespace GitLogViewer.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly GitService _gitService;
-
         public ObservableCollection<string> RepoPaths { get; } = new ObservableCollection<string>
         {
             @"C:\Users\paris\TortoiseGit\tortoisegit_tutorials",
@@ -24,23 +21,22 @@ namespace GitLogViewer.ViewModels
                 if (_selectedPath != value)
                 {
                     _selectedPath = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SelectedPath));
 
-                    if (InfoVM != null)
-                        InfoVM.SelectedPath = value; // sync ไปที่ InfoVM
+                    InfoVM.UpdatePath(_selectedPath);
+                    GitLogVM.UpdatePath(_selectedPath);
                 }
             }
         }
 
         public InfoViewModel InfoVM { get; }
-        public GitLogViewModel gitLogVM { get; }
+        public GitLogViewModel GitLogVM { get; }
 
         public MainViewModel()
         {
-            gitLogVM = new GitLogViewModel(_gitService);
-            InfoVM = new InfoViewModel(_gitService);
-            _gitService = new GitService();
-            SelectedPath = RepoPaths.FirstOrDefault();
+            _selectedPath = RepoPaths.FirstOrDefault();
+            GitLogVM = new GitLogViewModel(_selectedPath);
+            InfoVM = new InfoViewModel(_selectedPath);
         }
     }
 }
