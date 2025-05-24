@@ -6,16 +6,45 @@
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <!-- selected gitRepo button-->
+        <Grid Grid.Row="0" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Folder Name : " FontWeight="Bold" Margin="0 0 0 5"/>
+                    <TextBlock Text="{Binding SelectedFolderName}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Folder Path : " FontWeight="Bold"/>
+                    <TextBlock Text="{Binding SelectedFolderPath}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="เลือกโฟลเดอร์"
+                    Command="{Binding SelectFolderCommand}"
+                    Padding="10,5"
+                    Margin="0,0,0,10"/>
+            </StackPanel>
+
+        </Grid>
 
         <!-- ดรอปดาวน์เลือก path -->
-        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
             <TextBlock Text="Select Git Repository Path:" FontWeight="Bold" />
-            <ComboBox ItemsSource="{Binding RepoPaths}" SelectedItem="{Binding SelectedPath}" />
+            <ComboBox ItemsSource="{Binding RepoPaths}" SelectedItem="{Binding GitRepo}" />
         </StackPanel>
 
         <!-- InfoView -->
-        <local:InfoView Grid.Row="1" DataContext="{Binding InfoVM}" />
+        <local:InfoView Grid.Row="2" DataContext="{Binding InfoVM}" />
     </Grid>
 </Window>

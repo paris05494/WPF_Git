@@ -1,4 +1,5 @@
-﻿using GitLogViewer.ViewModels;
+﻿using GitLogViewer.Services;
+using GitLogViewer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace GitLogViewer.Views
         public MainView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(new FolderDialogService());
         }
     }
 }
