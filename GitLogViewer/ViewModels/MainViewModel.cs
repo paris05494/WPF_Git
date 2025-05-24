@@ -12,19 +12,19 @@ namespace GitLogViewer.ViewModels
             @"C:\Users\paris\TortoiseGit\tortoisegit_tests"
         };
 
-        private string _selectedPath;
-        public string SelectedPath
+        private string _gitRepo;
+        public string GitRepo
         {
-            get => _selectedPath;
+            get => _gitRepo;
             set
             {
-                if (_selectedPath != value)
+                if (_gitRepo != value)
                 {
-                    _selectedPath = value;
-                    OnPropertyChanged(nameof(SelectedPath));
+                    _gitRepo = value;
+                    OnPropertyChanged(nameof(GitRepo));
 
-                    InfoVM.UpdatePath(_selectedPath);
-                    GitLogVM.UpdatePath(_selectedPath);
+                    InfoVM.UpdatePath(_gitRepo);
+                    GitLogVM.UpdatePath(_gitRepo);
                 }
             }
         }
@@ -34,9 +34,9 @@ namespace GitLogViewer.ViewModels
 
         public MainViewModel()
         {
-            _selectedPath = RepoPaths.FirstOrDefault();
-            GitLogVM = new GitLogViewModel(_selectedPath);
-            InfoVM = new InfoViewModel(_selectedPath);
+            _gitRepo = RepoPaths.FirstOrDefault();
+            GitLogVM = new GitLogViewModel(_gitRepo);
+            InfoVM = new InfoViewModel(_gitRepo);
         }
     }
 }

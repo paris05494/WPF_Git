@@ -9,26 +9,26 @@ namespace GitLogViewer.ViewModels
         private readonly GitService _service = new GitService();
 
         public ObservableCollection<GitLogEntry> GitLogs { get; } = new ObservableCollection<GitLogEntry>();
-        private string _selectedPath;
+        private string _gitRepo;
 
-        public GitLogViewModel(string selectedPath)
+        public GitLogViewModel(string gitRepo)
         {
-            _selectedPath = selectedPath;
+            _gitRepo = gitRepo;
             LoadLogs();
         }
 
         public void UpdatePath(string newPath)
         {
-            _selectedPath = newPath;
+            _gitRepo = newPath;
             LoadLogs();
         }
 
         private void LoadLogs()
         {
             GitLogs.Clear();
-            if (string.IsNullOrEmpty(_selectedPath)) return;
+            if (string.IsNullOrEmpty(_gitRepo)) return;
 
-            var logs = _service.GetGitLogs(_selectedPath);
+            var logs = _service.GetGitLogs(_gitRepo);
             foreach (var log in logs)
                 GitLogs.Add(log);
         }

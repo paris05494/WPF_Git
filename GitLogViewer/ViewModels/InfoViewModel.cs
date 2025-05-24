@@ -14,11 +14,11 @@ namespace GitLogViewer.ViewModels
         public ICommand LoadFilesCommand { get; }
         public ICommand DoubleClickCommand { get; }
 
-        private string _selectedPath;
+        private string _gitRepo;
 
-        public InfoViewModel(string selectedPath)
+        public InfoViewModel(string gitRepo)
         {
-            _selectedPath = selectedPath;
+            _gitRepo = gitRepo;
             LoadFilesCommand = new RelayCommand(LoadFiles);
             DoubleClickCommand = new RelayCommand(OpenGitLogWindow);
             LoadFiles();
@@ -26,27 +26,27 @@ namespace GitLogViewer.ViewModels
 
         public void UpdatePath(string newPath)
         {
-            _selectedPath = newPath;
+            _gitRepo = newPath;
             LoadFiles();
         }
 
         private void LoadFiles()
         {
             GitFiles.Clear();
-            if (string.IsNullOrEmpty(_selectedPath)) return;
+            if (string.IsNullOrEmpty(_gitRepo)) return;
 
-            var files = _service.GetFiles(_selectedPath);
+            var files = _service.GetFiles(_gitRepo);
             foreach (var file in files)
                 GitFiles.Add(file);
         }
 
         private void OpenGitLogWindow()
         {
-            if (string.IsNullOrEmpty(_selectedPath)) return;
+            if (string.IsNullOrEmpty(_gitRepo)) return;
 
             var gitLogView = new GitLogView
             {
-                DataContext = new GitLogViewModel(_selectedPath)
+                DataContext = new GitLogViewModel(_gitRepo)
             };
             gitLogView.Show();
         }
