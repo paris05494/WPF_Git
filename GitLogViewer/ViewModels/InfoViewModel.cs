@@ -8,14 +8,13 @@ namespace GitLogViewer.ViewModels
 {
     public class InfoViewModel : ViewModelBase
     {
+        #region Field
         private readonly GitService _service = new GitService();
-
-        public ObservableCollection<string> GitFiles { get; } = new ObservableCollection<string>();
-        public ICommand LoadFilesCommand { get; }
-        public ICommand DoubleClickCommand { get; }
-
         private string _gitRepo;
 
+        #endregion
+
+        #region Constructors
         public InfoViewModel(string gitRepo)
         {
             _gitRepo = gitRepo;
@@ -24,12 +23,20 @@ namespace GitLogViewer.ViewModels
             LoadFiles();
         }
 
-        public void UpdatePath(string newPath)
-        {
-            _gitRepo = newPath;
-            LoadFiles();
-        }
+        #endregion
 
+        #region ICommand
+        public ICommand LoadFilesCommand { get; }
+        public ICommand DoubleClickCommand { get; }
+
+        #endregion
+
+        #region Properties
+        public ObservableCollection<string> GitFiles { get; } = new ObservableCollection<string>();
+
+        #endregion
+
+        #region Private methods
         private void LoadFiles()
         {
             GitFiles.Clear();
@@ -50,5 +57,17 @@ namespace GitLogViewer.ViewModels
             };
             gitLogView.Show();
         }
+
+        #endregion
+
+        #region Public methods
+        public void UpdatePath(string newPath)
+        {
+            _gitRepo = newPath;
+            LoadFiles();
+        }
+
+        #endregion
+
     }
 }

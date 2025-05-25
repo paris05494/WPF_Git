@@ -33,7 +33,6 @@ namespace GitLogViewer.ViewModels
 
         #endregion
 
-
         #region Propertys
 
         // GitRepo
