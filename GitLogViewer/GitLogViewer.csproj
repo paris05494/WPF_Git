@@ -69,6 +69,7 @@
     <Compile Include="Services\FolderDialogService.cs" />
     <Compile Include="Services\GitService.cs" />
     <Compile Include="Services\IFolderDialogService.cs" />
+    <Compile Include="Services\UserSettingService.cs" />
     <Compile Include="ViewModels\GitLogViewModel.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

@@ -25,7 +25,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="Folder Path : " FontWeight="Bold"/>
-                    <TextBlock Text="{Binding SelectedFolderPath}"/>
+                    <TextBlock Text="{Binding WorkPath}"/>
                 </StackPanel>
             </StackPanel>
 

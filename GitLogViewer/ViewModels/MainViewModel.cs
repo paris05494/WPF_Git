@@ -12,8 +12,11 @@ namespace GitLogViewer.ViewModels
     {
         #region Fields
         private string _gitRepo;
+        private string _workPath;
         private string _selectedFolderPath;
         private string _selectedFolderName;
+        private readonly UserSettingService _userSettingService;
+
 
         #endregion
 
@@ -21,7 +24,15 @@ namespace GitLogViewer.ViewModels
         public MainViewModel(IFolderDialogService folderDialogService)
         {
             SelectFolderCommand = new RelayCommand(SelectFolder);
+            _userSettingService = new UserSettingService();
+
+            // Load persisted work path
+            WorkPath = _userSettingService.LoadWorkPath();
+
+            // Set default GitRepo from list
             _gitRepo = RepoPaths.FirstOrDefault();
+
+            // Init ViewModels
             GitLogVM = new GitLogViewModel(_gitRepo);
             InfoVM = new InfoViewModel(_gitRepo);
         }
@@ -60,19 +71,22 @@ namespace GitLogViewer.ViewModels
         }
 
         // Select Folder
-
-        public string SelectedFolderPath
+        public string WorkPath
         {
-            get => _selectedFolderPath;
+            get => _workPath;
             set
             {
-                if (_selectedFolderPath != value)
+                if (_workPath != value)
                 {
-                    _selectedFolderPath = value;
-                    OnPropertyChanged(nameof(SelectedFolderPath));
+                    _workPath = value;
+                    _userSettingService.SaveWorkPath(_workPath);
+                    OnPropertyChanged(nameof(WorkPath));
+
+                    SelectedFolderName = Path.GetFileName(_workPath);
                 }
             }
         }
+
         public string SelectedFolderName
         {
             get => _selectedFolderName;
@@ -100,7 +114,7 @@ namespace GitLogViewer.ViewModels
 
             if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
             {
-                SelectedFolderPath = dialog.FileName;
+                WorkPath = dialog.FileName;
                 SelectedFolderName = Path.GetFileName(dialog.FileName);
             }
         }
