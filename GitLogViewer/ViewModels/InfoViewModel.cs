@@ -8,7 +8,7 @@ namespace GitLogViewer.ViewModels
 {
     public class InfoViewModel : ViewModelBase
     {
-        #region Field
+        #region Fields
         private readonly GitService _service = new GitService();
         private string _gitRepo;
 

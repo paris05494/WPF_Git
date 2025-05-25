@@ -6,23 +6,27 @@ namespace GitLogViewer.ViewModels
 {
     public class GitLogViewModel : ViewModelBase
     {
+        #region Fields
         private readonly GitService _service = new GitService();
-
-        public ObservableCollection<GitLogEntry> GitLogs { get; } = new ObservableCollection<GitLogEntry>();
         private string _gitRepo;
 
+        #endregion
+
+        #region Constructors
         public GitLogViewModel(string gitRepo)
         {
             _gitRepo = gitRepo;
             LoadLogs();
         }
 
-        public void UpdatePath(string newPath)
-        {
-            _gitRepo = newPath;
-            LoadLogs();
-        }
+        #endregion
 
+        #region Properties
+        public ObservableCollection<GitLogEntry> GitLogs { get; } = new ObservableCollection<GitLogEntry>();
+
+        #endregion
+
+        #region Private methods
         private void LoadLogs()
         {
             GitLogs.Clear();
@@ -32,5 +36,20 @@ namespace GitLogViewer.ViewModels
             foreach (var log in logs)
                 GitLogs.Add(log);
         }
+
+        #endregion
+
+        #region Public methods
+        public void UpdatePath(string newPath)
+        {
+            _gitRepo = newPath;
+            LoadLogs();
+        }
+
+        #endregion
+
+
+
+
     }
 }

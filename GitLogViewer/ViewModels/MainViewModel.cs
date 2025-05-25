@@ -33,7 +33,7 @@ namespace GitLogViewer.ViewModels
 
         #endregion
 
-        #region Propertys
+        #region Properties
 
         // GitRepo
         public InfoViewModel InfoVM { get; }
