@@ -48,8 +48,5 @@ namespace GitLogViewer.ViewModels
 
         #endregion
 
-
-
-
     }
 }
