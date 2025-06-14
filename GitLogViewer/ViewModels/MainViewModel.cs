@@ -116,6 +116,10 @@ namespace GitLogViewer.ViewModels
             {
                 WorkPath = dialog.FileName;
                 SelectedFolderName = Path.GetFileName(dialog.FileName);
+
+                // Load ModelConfig.xml and send to InfoViewModel
+                var people = XmlParser.ParseModelConfig(WorkPath);
+                InfoVM.LoadPeople(people);
             }
         }
 

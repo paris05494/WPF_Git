@@ -3,6 +3,8 @@ using GitLogViewer.Commands;
 using GitLogViewer.Views;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using GitLogViewer.Models;
+using System.Collections.Generic;
 
 namespace GitLogViewer.ViewModels
 {
@@ -33,6 +35,7 @@ namespace GitLogViewer.ViewModels
 
         #region Properties
         public ObservableCollection<string> GitFiles { get; } = new ObservableCollection<string>();
+        public ObservableCollection<PersonModel> People { get; } = new ObservableCollection<PersonModel>();
 
         #endregion
 
@@ -65,6 +68,13 @@ namespace GitLogViewer.ViewModels
         {
             _gitRepo = newPath;
             LoadFiles();
+        }
+
+        public void LoadPeople(List<PersonModel> people)
+        {
+            People.Clear();
+            foreach (var p in people)
+                People.Add(p);
         }
 
         #endregion

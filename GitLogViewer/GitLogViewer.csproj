@@ -66,10 +66,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Models\PersonModel.cs" />
     <Compile Include="Services\FolderDialogService.cs" />
     <Compile Include="Services\GitService.cs" />
     <Compile Include="Services\IFolderDialogService.cs" />
     <Compile Include="Services\UserSettingService.cs" />
+    <Compile Include="Services\XmlParser.cs" />
     <Compile Include="ViewModels\GitLogViewModel.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
