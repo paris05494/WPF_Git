@@ -1,0 +1,25 @@
+﻿<Window x:Class="GitLogViewer.Views.CopyView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GitLogViewer.Views"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="CopyView" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="Select" />
+                    <DataGridTextColumn Binding="{Binding Person.Name}" Header="Name" />
+                    <DataGridTextColumn Binding="{Binding Person.Lastname}" Header="Lastname" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
+                <Button Content="Submit" Width="80" Margin="5" Command="{Binding SubmitCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

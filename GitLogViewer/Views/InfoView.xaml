@@ -2,14 +2,20 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <StackPanel>
-        <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False" Margin="0 0 0 10">
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
+            <Button Content="Copy" Width="80" Margin="5" Command="{Binding OpenCopyViewCommand}" />
+            <Button Content="Replace" Width="80" Margin="5" Command="{Binding ReplaceCommand}" />
+        </StackPanel>
+
+        <TextBlock Text="Data in repository:" FontWeight="Bold" />
+        <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False" Margin="0 0 0 25">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
                 <DataGridTextColumn Header="Lastname" Binding="{Binding Lastname}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="Load Files"
-                Command="{Binding LoadFilesCommand}" Width="100" Margin="0,0,0,10"/>
+        <!--<Button Content="Load Files"
+        Command="{Binding LoadFilesCommand}" Width="100" Margin="0,0,0,10"/>-->
 
         <TextBlock Text="Files in repository:" FontWeight="Bold" />
         <ListBox ItemsSource="{Binding GitFiles}" Height="150" Margin="0,0,0,10"/>

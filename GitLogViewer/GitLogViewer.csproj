@@ -72,10 +72,14 @@
     <Compile Include="Services\IFolderDialogService.cs" />
     <Compile Include="Services\UserSettingService.cs" />
     <Compile Include="Services\XmlParser.cs" />
+    <Compile Include="ViewModels\CopyViewModel.cs" />
     <Compile Include="ViewModels\GitLogViewModel.cs" />
     <Compile Include="ViewModels\InfoViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\CopyView.xaml.cs">
+      <DependentUpon>CopyView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GitLogView.xaml.cs">
       <DependentUpon>GitLogView.xaml</DependentUpon>
     </Compile>
@@ -97,6 +101,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\CopyView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GitLogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

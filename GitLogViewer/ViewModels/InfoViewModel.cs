@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using GitLogViewer.Models;
 using System.Collections.Generic;
+using System.Linq;
+using System.Windows;
 
 namespace GitLogViewer.ViewModels
 {
@@ -13,6 +15,8 @@ namespace GitLogViewer.ViewModels
         #region Fields
         private readonly GitService _service = new GitService();
         private string _gitRepo;
+        private string _targetPath;
+        private List<PersonModel> _copiedPeople = new List<PersonModel>();
 
         #endregion
 
@@ -22,6 +26,8 @@ namespace GitLogViewer.ViewModels
             _gitRepo = gitRepo;
             LoadFilesCommand = new RelayCommand(LoadFiles);
             DoubleClickCommand = new RelayCommand(OpenGitLogWindow);
+            OpenCopyViewCommand = new RelayCommand(OpenCopyWindow);
+            ReplaceCommand = new RelayCommand(Replace);
             LoadFiles();
         }
 
@@ -30,6 +36,8 @@ namespace GitLogViewer.ViewModels
         #region ICommand
         public ICommand LoadFilesCommand { get; }
         public ICommand DoubleClickCommand { get; }
+        public ICommand OpenCopyViewCommand { get; }
+        public ICommand ReplaceCommand { get; }
 
         #endregion
 
@@ -61,6 +69,20 @@ namespace GitLogViewer.ViewModels
             gitLogView.Show();
         }
 
+        private void Replace()
+        {
+            if (string.IsNullOrEmpty(_targetPath) || _copiedPeople.Count == 0)
+            {
+                MessageBox.Show("ยังไม่มีข้อมูล Copy หรือไม่ได้เลือกปลายทาง");
+                return;
+            }
+
+            XmlParser.MergeModelConfig(_targetPath, _copiedPeople);
+            MessageBox.Show("เขียนข้อมูลใหม่เรียบร้อยแล้ว");
+
+            LoadPeople(XmlParser.ParseModelConfig(_targetPath));
+        }
+
         #endregion
 
         #region Public methods
@@ -75,6 +97,18 @@ namespace GitLogViewer.ViewModels
             People.Clear();
             foreach (var p in people)
                 People.Add(p);
+        }
+        private void OpenCopyWindow()
+        {
+            var copyView = new CopyView();
+            var vm = new CopyViewModel(People.ToList());
+            copyView.DataContext = vm;
+
+            if (copyView.ShowDialog() == true)
+            {
+                _targetPath = vm.SelectedPath;
+                _copiedPeople = vm.SelectedPeople.ToList();
+            }
         }
 
         #endregion
