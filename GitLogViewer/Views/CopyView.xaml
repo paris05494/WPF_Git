@@ -8,18 +8,25 @@
         WindowStartupLocation="CenterScreen"
         Title="CopyView" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False">
+        <StackPanel Margin="10">
+            <TextBlock Text="เลือกรายชื่อ:" FontWeight="Bold" Margin="0,0,0,5"/>
+            <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False" Height="150">
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="Select" />
-                    <DataGridTextColumn Binding="{Binding Person.Name}" Header="Name" />
-                    <DataGridTextColumn Binding="{Binding Person.Lastname}" Header="Lastname" />
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="เลือก" />
+                    <DataGridTextColumn Binding="{Binding Person.Name}" Header="ชื่อ" />
+                    <DataGridTextColumn Binding="{Binding Person.Lastname}" Header="นามสกุล" />
                 </DataGrid.Columns>
             </DataGrid>
 
-            <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
-                <Button Content="Submit" Width="80" Margin="5" Command="{Binding SubmitCommand}" />
-            </StackPanel>
+            <TextBlock Text="เลือกปลายทาง:" FontWeight="Bold" Margin="0,10,0,5"/>
+            <DataGrid ItemsSource="{Binding Targets}" AutoGenerateColumns="False" Height="150">
+                <DataGrid.Columns>
+                    <DataGridCheckBoxColumn Binding="{Binding IsSelected}" Header="เลือก" />
+                    <DataGridTextColumn Binding="{Binding FolderName}" Header="ชื่อโฟลเดอร์" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Button Content="Submit" Command="{Binding SubmitCommand}" Margin="0,10,0,0" Width="100" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>

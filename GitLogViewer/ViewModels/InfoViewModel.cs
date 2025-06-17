@@ -27,7 +27,6 @@ namespace GitLogViewer.ViewModels
             LoadFilesCommand = new RelayCommand(LoadFiles);
             DoubleClickCommand = new RelayCommand(OpenGitLogWindow);
             OpenCopyViewCommand = new RelayCommand(OpenCopyWindow);
-            ReplaceCommand = new RelayCommand(Replace);
             LoadFiles();
         }
 
@@ -37,7 +36,6 @@ namespace GitLogViewer.ViewModels
         public ICommand LoadFilesCommand { get; }
         public ICommand DoubleClickCommand { get; }
         public ICommand OpenCopyViewCommand { get; }
-        public ICommand ReplaceCommand { get; }
 
         #endregion
 
@@ -69,20 +67,6 @@ namespace GitLogViewer.ViewModels
             gitLogView.Show();
         }
 
-        private void Replace()
-        {
-            if (string.IsNullOrEmpty(_targetPath) || _copiedPeople.Count == 0)
-            {
-                MessageBox.Show("ยังไม่มีข้อมูล Copy หรือไม่ได้เลือกปลายทาง");
-                return;
-            }
-
-            XmlParser.MergeModelConfig(_targetPath, _copiedPeople);
-            MessageBox.Show("เขียนข้อมูลใหม่เรียบร้อยแล้ว");
-
-            LoadPeople(XmlParser.ParseModelConfig(_targetPath));
-        }
-
         #endregion
 
         #region Public methods
@@ -100,16 +84,11 @@ namespace GitLogViewer.ViewModels
         }
         private void OpenCopyWindow()
         {
-            var copyView = new CopyView();
             var vm = new CopyViewModel(People.ToList());
-            copyView.DataContext = vm;
-
-            if (copyView.ShowDialog() == true)
-            {
-                _targetPath = vm.SelectedPath;
-                _copiedPeople = vm.SelectedPeople.ToList();
-            }
+            var copyView = new CopyView { DataContext = vm };
+            copyView.ShowDialog();
         }
+
 
         #endregion
 

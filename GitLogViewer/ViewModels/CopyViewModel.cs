@@ -1,13 +1,10 @@
 ﻿using GitLogViewer.Commands;
 using GitLogViewer.Models;
 using GitLogViewer.Services;
-using Microsoft.WindowsAPICodePack.Dialogs;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,12 +12,10 @@ namespace GitLogViewer.ViewModels
 {
     public class CopyViewModel : ViewModelBase
     {
-        private string _targetPath;
-
         public ObservableCollection<PersonWrapper> People { get; } = new ObservableCollection<PersonWrapper>();
+        public ObservableCollection<FolderTargetModel> Targets { get; } = new ObservableCollection<FolderTargetModel>();
+
         public ICommand SubmitCommand { get; }
-        public string SelectedPath { get; private set; } = "";
-        public List<PersonModel> SelectedPeople { get; private set; } = new List<PersonModel>();
 
         public CopyViewModel(List<PersonModel> people)
         {
@@ -28,31 +23,71 @@ namespace GitLogViewer.ViewModels
                 People.Add(new PersonWrapper { IsSelected = false, Person = p });
 
             SubmitCommand = new RelayCommand(Submit);
+
+            LoadTargetFolders();
+        }
+
+        private void LoadTargetFolders()
+        {
+            string basePath = @"C:\Users\paris\TortoiseGit\tortoisegit_tutorials\A\B\work\Anw";
+
+            if (!Directory.Exists(basePath))
+                return;
+
+            var dirs = Directory.GetDirectories(basePath, "_Dummy*", SearchOption.TopDirectoryOnly);
+
+            foreach (var dir in dirs)
+            {
+                string configPath = Path.Combine(dir, "ModelConfig.xml");
+                if (File.Exists(configPath))
+                {
+                    Targets.Add(new FolderTargetModel
+                    {
+                        IsSelected = false,
+                        FolderName = Path.GetFileName(dir),
+                        FullPath = dir
+                    });
+                }
+            }
         }
 
         private void Submit()
         {
-            var selected = People.Where(p => p.IsSelected).Select(p => p.Person).ToList();
+            var selectedPeople = People
+                .Where(p => p.IsSelected && p.Person != null)
+                .Select(p => p.Person)
+                .ToList();
 
-            if (selected.Count == 0)
+            if (selectedPeople.Count == 0)
             {
-                MessageBox.Show("Please select at least one person to copy.");
+                MessageBox.Show("กรุณาเลือกรายชื่อเพื่อคัดลอก");
                 return;
             }
 
-            var dialog = new CommonOpenFileDialog { IsFolderPicker = true, Title = "เลือกโฟลเดอร์ปลายทาง" };
-            if (dialog.ShowDialog() != CommonFileDialogResult.Ok) return;
+            var selectedTargets = Targets
+                .Where(t => t.IsSelected)
+                .ToList();
 
-            SelectedPath = dialog.FileName;
-            SelectedPeople = selected;
+            if (selectedTargets.Count == 0)
+            {
+                MessageBox.Show("กรุณาเลือกโฟลเดอร์ปลายทาง");
+                return;
+            }
 
-            // ปิดหน้าต่างหลังสำเร็จ
+            foreach (var target in selectedTargets)
+            {
+                XmlParser.MergeModelConfig(target.FullPath, selectedPeople);
+            }
+
+            MessageBox.Show("คัดลอกและรวมข้อมูลสำเร็จ");
+
+            // ปิดหน้าต่าง
             var window = Application.Current.Windows
                 .OfType<Window>()
                 .FirstOrDefault(w => w.DataContext == this);
 
             if (window != null)
-                window.DialogResult = true;
+                window.Close();
         }
     }
 
@@ -60,5 +95,12 @@ namespace GitLogViewer.ViewModels
     {
         public bool IsSelected { get; set; }
         public PersonModel Person { get; set; }
+    }
+
+    public class FolderTargetModel
+    {
+        public bool IsSelected { get; set; }
+        public string FolderName { get; set; }
+        public string FullPath { get; set; } // ไม่แสดงใน UI แต่ใช้ merge
     }
 }

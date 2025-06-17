@@ -5,7 +5,7 @@
         
         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
             <Button Content="Copy" Width="80" Margin="5" Command="{Binding OpenCopyViewCommand}" />
-            <Button Content="Replace" Width="80" Margin="5" Command="{Binding ReplaceCommand}" />
+            
         </StackPanel>
         <TextBlock Text="Data in repository:" FontWeight="Bold" />
         <DataGrid ItemsSource="{Binding People}" AutoGenerateColumns="False" Margin="0 0 0 25">
