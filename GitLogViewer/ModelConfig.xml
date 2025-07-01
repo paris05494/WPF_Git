@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModelConfigClass xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="ModelConfigClass.xsd">
+#### Info: ModelConfigClass
+<QxNumber Value="qxxxx" />
+   <ApplicationOwner Value="xxx@kpit.com" />
+   <Company Value="KPIT" />
+   <Platform Value="ds_mp_dsrt" />
+   <sampleTime Value="0.001" />
+   <SolverMode Value="Auto" />
+   <CfdAppl Value="EES_SX_BF1_2020__BMU_C_SecOC__BM.txt" />
+   <CfdProject Value="CFD_Projekt" />
+   <CfdBusProject Value="SP2021_21KW05_BEV_BMU_mit_APPL_CAN.txt" />
+   <HilProject Value="SCLX" />
+   <DataCaptures />
+   <SpecialCase />
+   <MpsDefaultCpu />
+   <Release Value="L10s" />
+   <SubstituteBUZeroRevision Value="0" />
+   <Checkouts>
+      <Toolkette Value="0" />
+      <CFD_Projekte Value="0" />
+      <Checkout>
+         <Path Value="Example\Path" />
+         <Revision Value="IPM_HIL" />
+      </Checkout>
+   </Checkouts>
+   <processors>
+      <cpuBlockName Value="Model_Root" />
+      <ssm Value="1" />
+      <cpuName Value="master" />
+      <baseUnits>
+         <name Value="BASIS" />
+         <revision Value="453" />
+         <variant Value="standard111" />
+      </baseUnits>
+      <baseUnits>
+         <name Value="Basis" />
+         <revision Value="5543" />
+         <variant Value="sssssss" />
+      </baseUnits>
+      <baseUnits>
+         <name Value="M_LIN_9" />
+         <revision Value="0" />
+         <variant Value="SP2021_25KW17_DXE_SV_BusManager" />
+      </baseUnits>
+   </processors>
+   <processors>
+      <cpuBlockName Value="eng" />
+      <ssm Value="1" />
+      <cpuName Value="master" />
+      <baseUnits>
+         <name Value="ACHSGETRIEBE" />
+         <revision Value="250414_151035" />
+         <variant Value="standard" />
+      </baseUnits>
+      <BaseUnitClusters>
+         <type Value="hardware" />
+         <interface>
+            <name Value="INTERFACE_IO_HIL_SME" />
+            <revision Value="250414_145347" />
+            <variant Value="PRO_C_SCLX" />
+         </interface>
+         <model>
+            <name Value="HWI_IO_HIL_SME" />
+            <revision Value="250414_144909" />
+            <variant Value="PRO_C_SCLX" />
+         </model>
+      </BaseUnitClusters>
+   </processors>
+   <isFlexAk Value="false" />
+</ModelConfigClass>
